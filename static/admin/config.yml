@@ -1,0 +1,68 @@
+backend:
+  name: git-gateway
+  branch: master
+  commit_messages:
+    create: 'Create {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: '[skip ci] Upload “{{path}}”'
+    deleteMedia: '[skip ci] Delete “{{path}}”'
+
+local_backend: true
+media_folder: static/img
+public_folder: /img
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/pages/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: Image, name: hero, widget: image}
+      - {label: Location, name: location, widget: string}
+      - {label: "Tags", name: "tags", widget: "list", allow_add: true, default: ["Art Direction"]}
+      - {label: "Gallery", name: "galleryImages", widget: "list", summary: '{{fields.image}}', field: {label: Image, name: image, widget: image}}
+      - {label: Credits, name: credits, widget: string}
+      - widget: markdown
+        name: body
+        label: Contenido
+        buttons: 
+          - bold
+          - italic
+          - link
+          - heading-one
+          - heading-two
+          - heading-three
+          - heading-four
+          - heading-five
+          - heading-six
+          - bulleted-list
+          - numbered-list
+          - quote
+      
+      
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "src/pages/index.md"
+        label: "Landing Page"
+        name: "index"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "index-page"}
+          - {label: Title, name: title, widget: string}
+          - {label: Description, name: description, widget: 'markdown'}
+      - file: "src/pages/contact.md"
+        label: "Contact Page"
+        name: "contact"
+        fields:
+          - {label: "Template Key", name: "templateKey", widget: "hidden", default: "contact-page"}
+          - {label: Title, name: title, widget: string}
+          - {label: E-mail, name: email, widget: string, hint: 'I write only the user'}
+          - {label: Bullet, name: bullet, widget: string}
+          - {label: Instagram, name: instagram, widget: string, hint: 'I write only the user'}
+          - {label: Behance, name: behance, widget: string, hint: 'I write only the user'}
